@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_30_113445) do
+ActiveRecord::Schema.define(version: 2020_06_30_150524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "students", force: :cascade do |t|
+    t.string "email"
+    t.string "phone"
+    t.string "fullname"
+    t.string "password_digest"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_students_on_email", unique: true
+  end
 
   create_table "teachers", force: :cascade do |t|
     t.string "fullname"
@@ -25,6 +35,8 @@ ActiveRecord::Schema.define(version: 2020_06_30_113445) do
     t.string "session_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "password_digest"
+    t.index ["email"], name: "index_teachers_on_email", unique: true
   end
 
 end

@@ -3,9 +3,10 @@ module Api
     class SignupController < ApplicationController
       def create
         account_type = params[:account_type]
-        if account_type == 'student'
-        elsif account_type == 'teacher'
-          @user = User.new(teacher_params)
+        if account_type == 'Student'
+          @user = Student.new(user_params)
+        elsif account_type == 'Teacher'
+          @user = Teacher.new(user_params)
         end
     
         if @user.save
@@ -14,14 +15,19 @@ module Api
           tokens = session.login
           response.set_cookie(JWTSessions.access_cookie, value: tokens[:access], httponly: true, secure: Rails.env.production? )
 
-          render json: { csrf: tokens[:csrf], access: tokens[:access] }, status: :created
+          render json: { csrf: tokens[:csrf], access: tokens[:access], curent_user: @user }, status: :created
         else
           render json: @user.errors, status: :unprocessable_entity
         end
       end
 
-      def teacher_params
-        params.require(:user).permit(:fullname, :email, :phone, :bio, :what_I_can_do, :sechdule, :session_type)
+      def check_uniqueness
+        email = Teacher.find_by(email: params[:email]) || Student.find_by(email: params[:email])
+        render json: { email: !!!email }
+      end
+
+      def user_params
+        params.require(:user).permit(:fullname, :email, :password)
       end
     end
   end

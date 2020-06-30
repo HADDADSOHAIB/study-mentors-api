@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
   private
 
   def current_user
-    @current_user ||= Teacher.find(payload["user_id"])
+    @current_user ||= Teacher.find(payload["user_id"]) || Student.find(payload["user_id"])
   end
   
   def not_authorized
