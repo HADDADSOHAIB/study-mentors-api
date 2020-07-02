@@ -18,8 +18,8 @@ module Api
           session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)
           tokens = session.login
           response.set_cookie(JWTSessions.access_cookie, value: tokens[:access], httponly: true, secure: Rails.env.production? )
-
-          render json: { csrf: tokens[:csrf], access: tokens[:access], current_user: @user }, status: :created
+          
+          render json: { csrf: tokens[:csrf], access: tokens[:access], current_user: @user, categories: @user.categories || [] }, status: :created
         else
           render json: { message: "Invalid Credentials" }, status: :unauthorized
         end
@@ -39,8 +39,8 @@ module Api
       end
 
       def get_user_by_token
-        if current_user 
-          render json: { current_user: current_user, account_type: current_user.class.to_s }, status: :ok
+        if current_user
+          render json: { current_user: current_user, account_type: current_user.class.to_s, categories: current_user.categories || [] }, status: :ok
         else
           render json: { message: 'There is an error' }, status: :unprocessable_entity
         end

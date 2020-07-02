@@ -15,7 +15,7 @@ module Api
           tokens = session.login
           response.set_cookie(JWTSessions.access_cookie, value: tokens[:access], httponly: true, secure: Rails.env.production? )
 
-          render json: { csrf: tokens[:csrf], access: tokens[:access], curent_user: @user }, status: :created
+          render json: { csrf: tokens[:csrf], access: tokens[:access], curent_user: @user, categories: @user.categories }, status: :created
         else
           render json: @user.errors, status: :unprocessable_entity
         end
