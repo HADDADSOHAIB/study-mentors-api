@@ -46,7 +46,7 @@ module Api
       end
 
       def teacher_params
-        params.require(:teacher).permit(:fullname, :phone, :bio, :what_I_can_do)
+        params.require(:teacher).permit(:fullname, :phone, :bio, :what_I_can_do, :photo)
       end
     end
   end
