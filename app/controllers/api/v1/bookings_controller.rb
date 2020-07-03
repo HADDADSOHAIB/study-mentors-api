@@ -22,6 +22,29 @@ module Api
           render json: @booking.errors, status: :unprocessable_entity
         end
       end
+
+      def my_bookings
+        if params[:account_type] == "Student"
+          @user = Student.find(params[:id])
+        else
+          @user = Teacher.find(params[:id])
+        end
+        bookings = []
+        @user.bookings.to_a.each do |booking|
+          bookings << {
+            id: booking.id,
+            teacher: booking.teacher,
+            student: booking.student,
+            category: booking.category,
+            date: booking.date,
+            from: booking.from,
+            to: booking.to,
+            session_type: booking.session_type
+          }
+        end
+
+        render json: { bookings: bookings }, status: :ok
+      end
     end
   end
 end

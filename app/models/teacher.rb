@@ -7,4 +7,6 @@ class Teacher < ApplicationRecord
 
   has_many :join_category_teachers
   has_many :categories, through: :join_category_teachers
+
+  has_many :bookings
 end

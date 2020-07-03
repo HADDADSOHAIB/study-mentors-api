@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       delete 'signout', to: 'loging#destroy'
 
       resources :bookings, only: [:create]
+      post 'bookings/my_bookings', to: 'bookings#my_bookings'
     end
   end
 end
