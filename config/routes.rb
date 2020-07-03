@@ -13,10 +13,13 @@ Rails.application.routes.draw do
       put 'teachers/:id/update_profil', to: 'teachers#update_profile'
       put 'teachers/:id/update_schedule', to: 'teachers#update_schedule'
       put 'teachers/:id/update_session_type', to: 'teachers#update_session_type'
+      get 'teachers/:id', to: 'teachers#get_teacher'
 
       get 'categories/:name/teachers', to: 'categories#get_teachers_by_categories'
 
       delete 'signout', to: 'loging#destroy'
+
+      resources :bookings, only: [:create]
     end
   end
 end

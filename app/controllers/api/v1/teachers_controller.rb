@@ -1,8 +1,13 @@
 module Api
   module V1
     class TeachersController < ApplicationController
-      before_action :authorize_access_request!
-      before_action :set_teacher, only: [:update_profile, :update_schedule, :update_session_type]
+      before_action :authorize_access_request!, except: [:get_teacher]
+      before_action :set_teacher, only: [:update_profile, :update_schedule, :update_session_type, :get_teacher]
+      
+      def get_teacher
+        render json: { teacher: @teacher, categories: @teacher.categories || [] }, status: :ok
+      end
+
       def update_profile
         categoriesMap = {
           maths: 1,

@@ -9,8 +9,10 @@ module Api
         account_type = params[:account_type]
         if account_type == 'Student'
           @user = Student.find_by(email: params[:email])
+          @categories = []
         elsif account_type == 'Teacher'
           @user = Teacher.find_by(email: params[:email])
+          @categories = @user.categories
         end
 
         if @user.authenticate(params[:password])
@@ -19,7 +21,7 @@ module Api
           tokens = session.login
           response.set_cookie(JWTSessions.access_cookie, value: tokens[:access], httponly: true, secure: Rails.env.production? )
           
-          render json: { csrf: tokens[:csrf], access: tokens[:access], current_user: @user, categories: @user.categories || [] }, status: :created
+          render json: { csrf: tokens[:csrf], access: tokens[:access], current_user: @user, categories: @categories }, status: :created
         else
           render json: { message: "Invalid Credentials" }, status: :unauthorized
         end
