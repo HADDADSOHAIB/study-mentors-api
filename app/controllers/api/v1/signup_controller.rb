@@ -6,7 +6,10 @@ module Api
         if account_type == 'Student'
           @user = Student.new(user_params)
         elsif account_type == 'Teacher'
-          @user = Teacher.new(user_params)
+          teacher_params = user_params
+          teacher_params[:schedule] = {}
+          teacher_params[:session_type] = 'online'
+          @user = Teacher.new(teacher_params)
         end
     
         if @user.save
@@ -15,7 +18,7 @@ module Api
           tokens = session.login
           response.set_cookie(JWTSessions.access_cookie, value: tokens[:access], httponly: true, secure: Rails.env.production? )
 
-          render json: { csrf: tokens[:csrf], access: tokens[:access], curent_user: @user, categories: [] }, status: :created
+          render json: { csrf: tokens[:csrf], access: tokens[:access], current_user: @user, categories: [] }, status: :created
         else
           render json: @user.errors, status: :unprocessable_entity
         end
