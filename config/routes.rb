@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       put 'login/refresh', to: 'login#refresh'
       post 'login', to: 'login#create'
 
+      put 'students/:id/update_profil', to: 'students#update_profile'
+
       put 'teachers/:id/update_profil', to: 'teachers#update_profile'
       put 'teachers/:id/update_schedule', to: 'teachers#update_schedule'
       put 'teachers/:id/update_session_type', to: 'teachers#update_session_type'

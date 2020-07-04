@@ -43,6 +43,8 @@ module Api
         end
       end
 
+      private
+      
       def set_teacher
         @teacher = Teacher.find(params[:id])
         if @teacher.nil?

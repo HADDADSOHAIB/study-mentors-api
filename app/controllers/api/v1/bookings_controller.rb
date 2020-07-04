@@ -1,6 +1,8 @@
 module Api
   module V1
     class BookingsController < ApplicationController
+      before_action :authorize_refresh_request!
+      
       def create
         teacher = Teacher.find(params[:teacher_id])
         student = Student.find(params[:student_id])

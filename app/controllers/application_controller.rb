@@ -5,7 +5,11 @@ class ApplicationController < ActionController::API
   private
 
   def current_user
-    @current_user ||= Teacher.find(payload["user_id"]) || Student.find(payload["user_id"])
+    if payload["account_type"] == "Teacher"
+      @current_user ||= Teacher.find(payload["user_id"])
+    else
+      @current_user ||= Student.find(payload["user_id"])
+    end
   end
   
   def not_authorized

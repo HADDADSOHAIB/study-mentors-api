@@ -16,7 +16,7 @@ module Api
         end
 
         if @user.authenticate(params[:password])
-          payload = { user_id: @user.id }
+          payload = { user_id: @user.id, account_type: account_type }
           session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)
           tokens = session.login
           response.set_cookie(JWTSessions.access_cookie, value: tokens[:access], httponly: true, secure: Rails.env.production? )
@@ -42,7 +42,8 @@ module Api
 
       def get_user_by_token
         if current_user
-          render json: { current_user: current_user, account_type: current_user.class.to_s, categories: current_user.categories || [] }, status: :ok
+          categories = payload["account_type"] == "Teacher" ? current_user.categories : []
+          render json: { current_user: current_user, account_type: payload["account_type"], categories: categories }, status: :ok
         else
           render json: { message: 'There is an error' }, status: :unprocessable_entity
         end
