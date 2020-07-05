@@ -1,4 +1,4 @@
-# Let-Learn
+# Study Mentors Api
 
 This project is the api for study mentors, a plateform where students and teachers can book sessions, it is build as a ruby on rails api. you can find the font end [here](https://github.com/HADDADSOHAIB/study-mentors)
 
@@ -31,7 +31,7 @@ If you don't get that result, follow this [link](https://www.ruby-lang.org/en/do
 ### Usage
 
 If you want to test and use this project, you need to have Ruby and Rails installed  as mentioned before in your computer and clone this repository as follows:
-* `$ git clone https://github.com/HADDADSOHAIB/let-learn.git`
+* `$ git clone https://github.com/HADDADSOHAIB/study-mentors-api.git`
 
 after that you need to run the bundler
 * `$ bundle  install`
