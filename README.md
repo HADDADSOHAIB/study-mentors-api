@@ -7,11 +7,8 @@ This project is the api for study mentors, a plateform where students and teache
 
 [heroku live site](http://study-mentors-api.herokuapp.com/)
 
+These are the available routes:
 ![start](/public/images/readme/1.png)
-![start](/public/images/readme/2.png)
-![start](/public/images/readme/3.png)
-![start](/public/images/readme/4.png)
-![start](/public/images/readme/5.png)
 
 ## Environment set up requirements
 
@@ -59,13 +56,7 @@ to run the test cases run the following commands
 
 - Ruby
 - Ruby on Rails
-- ActionCable
-- ActiveStorage
-- bootstrap
-- CSS
-- HTML
-- JavaScript
-- JQuery
+- Active Record
 
 ## Authors
 
