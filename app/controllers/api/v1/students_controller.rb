@@ -1,7 +1,7 @@
 module Api
   module V1
     class StudentsController < ApplicationController
-      before_action :authorize_refresh_request!, only: [:update_profile]
+      before_action :authorize_access_request!, only: [:update_profile]
       before_action :set_student
 
       def update_profile
