@@ -2,8 +2,8 @@ module Api
   module V1
     class TeachersController < ApplicationController
       before_action :authorize_access_request!, except: [:get_teacher]
-      before_action :set_teacher, only: [:update_profile, :update_schedule, :update_session_type, :get_teacher]
-      
+      before_action :set_teacher, only: %i[update_profile update_schedule update_session_type get_teacher]
+
       def get_teacher
         render json: { teacher: @teacher, categories: @teacher.categories || [] }, status: :ok
       end
@@ -15,7 +15,7 @@ module Api
           arts: 3,
           english: 4
         }
-        JoinCategoryTeacher.where(teacher_id: @teacher.id).to_a.each{ |el| el.destroy }
+        JoinCategoryTeacher.where(teacher_id: @teacher.id).to_a.each(&:destroy)
         params[:categories].each do |k, v|
           @teacher.categories << Category.find(categoriesMap[k.to_sym]) if v
         end
@@ -44,12 +44,10 @@ module Api
       end
 
       private
-      
+
       def set_teacher
         @teacher = Teacher.find(params[:id])
-        if @teacher.nil?
-          render json: { message: 'Record not found' }, status: 400
-        end
+        render json: { message: 'Record not found' }, status: 400 if @teacher.nil?
       end
 
       def teacher_params

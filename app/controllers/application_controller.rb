@@ -5,14 +5,14 @@ class ApplicationController < ActionController::API
   private
 
   def current_user
-    if payload["account_type"] == "Teacher"
-      @current_user ||= Teacher.find(payload["user_id"])
-    else
-      @current_user ||= Student.find(payload["user_id"])
-    end
+    @current_user ||= if payload['account_type'] == 'Teacher'
+                        Teacher.find(payload['user_id'])
+                      else
+                        Student.find(payload['user_id'])
+                      end
   end
-  
+
   def not_authorized
-    render json: { error: "Not authorized" }, status: :unauthorized
+    render json: { error: 'Not authorized' }, status: :unauthorized
   end
 end

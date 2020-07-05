@@ -13,15 +13,14 @@ module Api
       end
 
       private
+
       def student_params
         params.require(:student).permit(:fullname, :phone)
       end
 
       def set_student
         @student = Student.find(params[:id])
-        if @student.nil?
-          render json: { message: 'Record not found' }, status: 400
-        end
+        render json: { message: 'Record not found' }, status: 400 if @student.nil?
       end
     end
   end

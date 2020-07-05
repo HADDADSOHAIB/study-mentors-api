@@ -2,7 +2,7 @@ module Api
   module V1
     class BookingsController < ApplicationController
       before_action :authorize_access_request!
-      
+
       def create
         teacher = Teacher.find(params[:teacher_id])
         student = Student.find(params[:student_id])
@@ -19,18 +19,18 @@ module Api
         )
 
         if @booking.save
-          render json: { booking: @booking  }, status: :created
+          render json: { booking: @booking }, status: :created
         else
           render json: @booking.errors, status: :unprocessable_entity
         end
       end
 
       def my_bookings
-        if params[:account_type] == "Student"
-          @user = Student.find(params[:id])
-        else
-          @user = Teacher.find(params[:id])
-        end
+        @user = if params[:account_type] == 'Student'
+                  Student.find(params[:id])
+                else
+                  Teacher.find(params[:id])
+                end
         bookings = []
         @user.bookings.to_a.each do |booking|
           bookings << {
