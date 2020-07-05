@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       post 'signup/unique', to: 'signup#check_uniqueness'  
       post 'signup', to: 'signup#create'
 
-      get 'login/get_user_by_token', to: 'login#get_user_by_token'
+      get 'login/get_user_by_token', to: 'login#user_by_token'
       put 'login/refresh', to: 'login#refresh'
       post 'login', to: 'login#create'
 
@@ -15,9 +15,9 @@ Rails.application.routes.draw do
       put 'teachers/:id/update_profil', to: 'teachers#update_profile'
       put 'teachers/:id/update_schedule', to: 'teachers#update_schedule'
       put 'teachers/:id/update_session_type', to: 'teachers#update_session_type'
-      get 'teachers/:id', to: 'teachers#get_teacher'
+      get 'teachers/:id', to: 'teachers#teacher'
 
-      get 'categories/:name/teachers', to: 'categories#get_teachers_by_categories'
+      get 'categories/:name/teachers', to: 'categories#teachers_by_categories'
 
       delete 'signout', to: 'loging#destroy'
 

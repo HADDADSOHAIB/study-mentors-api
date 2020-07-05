@@ -16,9 +16,19 @@ module Api
           payload = { user_id: @user.id, account_type: account_type }
           session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)
           tokens = session.login
-          response.set_cookie(JWTSessions.access_cookie, value: tokens[:access], httponly: true, secure: Rails.env.production?)
+          response.set_cookie(
+            JWTSessions.access_cookie,
+            value: tokens[:access],
+            httponly: true,
+            secure: Rails.env.production?
+          )
 
-          render json: { csrf: tokens[:csrf], access: tokens[:access], current_user: @user, categories: [] }, status: :created
+          render json: {
+            csrf: tokens[:csrf],
+            access: tokens[:access],
+            current_user: @user,
+            categories: []
+          }, status: :created
         else
           render json: @user.errors, status: :unprocessable_entity
         end
@@ -26,7 +36,7 @@ module Api
 
       def check_uniqueness
         email = Teacher.find_by(email: params[:email]) || Student.find_by(email: params[:email])
-        render json: { email: !!!email }
+        render json: { email: !email }
       end
 
       private

@@ -1,15 +1,15 @@
 module Api
   module V1
     class TeachersController < ApplicationController
-      before_action :authorize_access_request!, except: [:get_teacher]
-      before_action :set_teacher, only: %i[update_profile update_schedule update_session_type get_teacher]
+      before_action :authorize_access_request!, except: [:teacher]
+      before_action :set_teacher, only: %i[update_profile update_schedule update_session_type teacher]
 
-      def get_teacher
+      def teacher
         render json: { teacher: @teacher, categories: @teacher.categories || [] }, status: :ok
       end
 
       def update_profile
-        categoriesMap = {
+        categories_map = {
           maths: 1,
           physics: 2,
           arts: 3,
@@ -17,7 +17,7 @@ module Api
         }
         JoinCategoryTeacher.where(teacher_id: @teacher.id).to_a.each(&:destroy)
         params[:categories].each do |k, v|
-          @teacher.categories << Category.find(categoriesMap[k.to_sym]) if v
+          @teacher.categories << Category.find(categories_map[k.to_sym]) if v
         end
 
         if @teacher.update(teacher_params)
