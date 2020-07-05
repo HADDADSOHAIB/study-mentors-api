@@ -1,4 +1,4 @@
-# Let-Learn
+# Study Mentors Api
 
 This project is the api for study mentors, a plateform where students and teachers can book sessions, it is build as a ruby on rails api. you can find the font end [here](https://github.com/HADDADSOHAIB/study-mentors)
 
