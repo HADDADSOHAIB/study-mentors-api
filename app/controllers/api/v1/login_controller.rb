@@ -6,16 +6,16 @@ module Api
       before_action :authorize_access_request!, only: [:user_by_token]
 
       def create
-        account_type = params[:account_type]
+        account_type = login_params[:account_type]
         if account_type == 'Student'
-          @user = Student.find_by(email: params[:email])
+          @user = Student.find_by(email: login_params[:email])
           @categories = []
         elsif account_type == 'Teacher'
-          @user = Teacher.find_by(email: params[:email])
+          @user = Teacher.find_by(email: login_params[:email])
           @categories = @user.categories
         end
 
-        if @user.authenticate(params[:password])
+        if @user.authenticate(login_params[:password])
           payload = { user_id: @user.id, account_type: account_type }
           session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)
           tokens = session.login
@@ -48,6 +48,11 @@ module Api
         else
           render json: { message: 'There is an error' }, status: :unprocessable_entity
         end
+      end
+
+      private
+      def login_params
+        params.require(:login).permit(:account_type, :email, :password)
       end
     end
   end

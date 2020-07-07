@@ -10,7 +10,11 @@ module Api
       private
 
       def set_category
-        @category = Category.find_by(name: params[:name])
+        @category = Category.find_by(name: category_params[:name])
+      end
+
+      def category_params
+        params.permit(:name)
       end
     end
   end

@@ -4,18 +4,18 @@ module Api
       before_action :authorize_access_request!
 
       def create
-        teacher = Teacher.find(params[:teacher_id])
-        student = Student.find(params[:student_id])
-        category = Category.find(params[:category_id])
+        teacher = Teacher.find(create_params[:teacher_id])
+        student = Student.find(create_params[:student_id])
+        category = Category.find(create_params[:category_id])
 
         @booking = Booking.new(
           teacher: teacher,
           student: student,
           category: category,
-          session_type: params[:type],
-          date: params[:from],
-          from: params[:from],
-          to: params[:to]
+          session_type: create_params[:type],
+          date: create_params[:from],
+          from: create_params[:from],
+          to: create_params[:to]
         )
 
         if @booking.save
@@ -26,10 +26,10 @@ module Api
       end
 
       def my_bookings
-        @user = if params[:account_type] == 'Student'
-                  Student.find(params[:id])
+        @user = if my_bookings_params[:account_type] == 'Student'
+                  Student.find(my_bookings_params[:id])
                 else
-                  Teacher.find(params[:id])
+                  Teacher.find(my_bookings_params[:id])
                 end
         bookings = []
         @user.bookings.to_a.each do |booking|
@@ -46,6 +46,16 @@ module Api
         end
 
         render json: { bookings: bookings }, status: :ok
+      end
+
+      private
+
+      def my_bookings_params
+        params.require(:booking).permit(:id, :account_type)
+      end
+
+      def create_params
+        params.require(:booking).permit(:teacher_id, :student_id, :category_id, :type, :from, :to)
       end
     end
   end
