@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Student' do
+RSpec.describe Student, type: :model do
   let(:student) { build(:student) }
 
   it 'should be valid' do
