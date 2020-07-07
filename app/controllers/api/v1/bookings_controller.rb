@@ -31,7 +31,7 @@ module Api
                 else
                   Teacher.find(my_bookings_params[:id])
                 end
-        render json: @user.bookings.to_json(include: [:student, :teacher, :category]), status: :ok
+        render json: @user.bookings.to_json(include: %i[student teacher category]), status: :ok
       end
 
       private

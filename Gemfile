@@ -39,9 +39,9 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'faker'
   gem 'selenium-webdriver'
   gem 'sqlite3'
-  gem 'faker'
 end
 
 group :development do

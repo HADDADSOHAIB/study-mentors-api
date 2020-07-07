@@ -51,6 +51,7 @@ module Api
       end
 
       private
+
       def login_params
         params.require(:login).permit(:account_type, :email, :password)
       end
