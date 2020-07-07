@@ -1,9 +1,8 @@
 FactoryBot.define do
-  factory :student do
+  factory :student, class: 'Student' do
     sequence :id
     fullname { 'UserTest' }
-    email { "usertest#{id}@example.com" }
+    email { "user_student@example.com" }
     password { 'password' }
-    password_confirmation { 'password' }
   end
 end
