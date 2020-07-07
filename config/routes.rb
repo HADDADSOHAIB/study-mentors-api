@@ -7,7 +7,6 @@ Rails.application.routes.draw do
       post 'signup', to: 'signup#create'
 
       get 'login/get_user_by_token', to: 'login#user_by_token'
-      put 'login/refresh', to: 'login#refresh'
       post 'login', to: 'login#create'
 
       put 'students/:id/update_profil', to: 'students#update_profile'
@@ -18,8 +17,6 @@ Rails.application.routes.draw do
       get 'teachers/:id', to: 'teachers#teacher'
 
       get 'categories/:name/teachers', to: 'categories#teachers_by_categories'
-
-      delete 'signout', to: 'loging#destroy'
 
       resources :bookings, only: [:create]
       post 'bookings/my_bookings', to: 'bookings#my_bookings'
