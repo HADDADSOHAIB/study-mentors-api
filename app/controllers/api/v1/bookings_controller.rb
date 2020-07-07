@@ -31,21 +31,7 @@ module Api
                 else
                   Teacher.find(my_bookings_params[:id])
                 end
-        bookings = []
-        @user.bookings.to_a.each do |booking|
-          bookings << {
-            id: booking.id,
-            teacher: booking.teacher,
-            student: booking.student,
-            category: booking.category,
-            date: booking.date,
-            from: booking.from,
-            to: booking.to,
-            session_type: booking.session_type
-          }
-        end
-
-        render json: { bookings: bookings }, status: :ok
+        render json: @user.bookings.to_json(include: [:student, :teacher, :category]), status: :ok
       end
 
       private
