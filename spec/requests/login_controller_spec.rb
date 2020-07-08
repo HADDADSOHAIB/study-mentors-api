@@ -6,9 +6,11 @@ RSpec.describe Api::V1::LoginController do
       student.save
       post '/api/v1/login', params:
         {
-          account_type: 'Student',
-          email: 'user_student@example.com',
-          password: 'password'
+          :login => {
+            account_type: 'Student',
+            email: 'user_student@example.com',
+            password: 'password'
+          }
         }
     end
     it 'returns http success' do
@@ -26,9 +28,11 @@ RSpec.describe Api::V1::LoginController do
       student.save
       post '/api/v1/login', params:
       {
-        account_type: 'Student',
-        email: 'user_student@example.com',
-        password: 'passwordd'
+        :login => {
+          account_type: 'Student',
+          email: 'user_student@example.com',
+          password: 'passwordd'
+        }
       }
     end
     it 'returns http success' do
