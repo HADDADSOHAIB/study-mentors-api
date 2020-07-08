@@ -23,7 +23,7 @@ module Api
         if @teacher.update(teacher_params)
           render json: { current_user: @teacher, categories: @teacher.categories || [] }, status: :ok
         else
-          render json: @teacher.errors, status: :unprocessable_entity
+          render json: { error: @teacher.errors }, status: 400
         end
       end
 
@@ -31,7 +31,7 @@ module Api
         if @teacher.update(schedule: params[:schedule])
           render json: @teacher, status: :ok
         else
-          render json: @teacher.errors, status: :unprocessable_entity
+          render json: {error: @teacher.errors}, status: 400
         end
       end
 
@@ -39,15 +39,15 @@ module Api
         if @teacher.update(session_type: params[:session_type])
           render json: @teacher, status: :ok
         else
-          render json: @teacher.errors, status: :unprocessable_entity
+          render json: {error: @teacher.errors}, status: 400
         end
       end
 
       private
 
       def set_teacher
-        @teacher = Teacher.find(params[:id])
-        render json: { message: 'Record not found' }, status: 400 if @teacher.nil?
+        @teacher = Teacher.find_by(id: params[:id])
+        render json: { error: 'Record not found' }, status: 400 if @teacher.nil?
       end
 
       def teacher_params
