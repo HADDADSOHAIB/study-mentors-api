@@ -8,7 +8,7 @@ module Api
         if @student.update(student_params)
           render json: { current_user: @student }, status: :ok
         else
-          render json: @student.errors, status: :unprocessable_entity
+          render json: { error: @student.errors }, status: 400
         end
       end
 
@@ -19,8 +19,8 @@ module Api
       end
 
       def set_student
-        @student = Student.find(params[:id])
-        render json: { message: 'Record not found' }, status: 400 if @student.nil?
+        @student = Student.find_by(id: params[:id])
+        render json: { error: 'Record not found' }, status: 400 if @student.nil?
       end
     end
   end
