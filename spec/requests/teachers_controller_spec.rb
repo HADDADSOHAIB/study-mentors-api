@@ -279,4 +279,86 @@ RSpec.describe Api::V1::TeachersController do
       expect(json_response.keys).to match_array(%w[error])
     end
   end
+
+  describe 'PUT /teachers/:id/update_session_type' do
+    let(:teacher) { build(:teacher) }
+    before do
+      teacher.save
+      post '/api/v1/login', params:
+        {
+          :login => {
+            account_type: 'Teacher',
+            email: 'user_teacher@example.com',
+            password: 'password'
+          }
+        }
+      json_response = JSON.parse(response.body)
+      put "/api/v1/teachers/#{teacher.id}/update_session_type", params:
+      {
+        :session_type => "online, shop"
+      }, headers:
+      {
+        Authorization:  "Bearer #{json_response["access"]}"
+      }
+    end
+    it 'returns http ok' do
+      expect(response).to have_http_status(:ok)
+    end
+    it 'JSON body response contains expected elements, session_type' do
+      json_response = JSON.parse(response.body)
+      expect(json_response.keys).to include('session_type')
+    end
+    it 'the student has the new session_type' do
+      json_response = JSON.parse(response.body)
+      expect(json_response["session_type"]).to eq("online, shop")
+    end
+  end
+
+  describe 'PUT /teachers/:id/update_session_type without a token' do
+    let(:teacher) { build(:teacher) }
+    before do
+      teacher.save
+      put "/api/v1/teachers/#{teacher.id}/update_session_type", params:
+      {
+        :session_type => "online, shop"
+      }
+    end
+    it 'returns http unauthorized' do
+      expect(response).to have_http_status(:unauthorized)
+    end
+    it 'JSON body response contains expected elements, error' do
+      json_response = JSON.parse(response.body)
+      expect(json_response.keys).to match_array(%w[error])
+    end
+  end
+
+  describe 'PUT /teachers/:id/update_session_type with wrong id' do
+    let(:teacher) { build(:teacher) }
+    before do
+      teacher.save
+      post '/api/v1/login', params:
+        {
+          :login => {
+            account_type: 'Teacher',
+            email: 'user_teacher@example.com',
+            password: 'password'
+          }
+        }
+      json_response = JSON.parse(response.body)
+      put "/api/v1/teachers/#{teacher.id + 100}/update_session_type", params:
+      {
+        :session_type => "online, shop"
+      }, headers:
+      {
+        Authorization:  "Bearer #{json_response["access"]}"
+      }
+    end
+    it 'returns http 400' do
+      expect(response).to have_http_status(400)
+    end
+    it 'JSON body response contains expected elements, error' do
+      json_response = JSON.parse(response.body)
+      expect(json_response.keys).to match_array(%w[error])
+    end
+  end
 end
