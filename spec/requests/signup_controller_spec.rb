@@ -1,5 +1,7 @@
 require 'rails_helper'
 RSpec.describe Api::V1::SignupController do
+  let(:student) { build(:student) }
+
   describe 'POST /api/v1/login' do
     before do
       post '/api/v1/signup', params:
@@ -24,7 +26,6 @@ RSpec.describe Api::V1::SignupController do
   end
 
   describe 'POST /api/v1/login with duplicated email' do
-    let(:student) { build(:student) }
     before do
       student.save
       post '/api/v1/signup', params:
@@ -58,7 +59,6 @@ RSpec.describe Api::V1::SignupController do
   end
 
   describe 'POST /api/v1/signup/unique with a dublicated email' do
-    let(:student) { build(:student) }
     before do
       student.save
       post '/api/v1/signup/unique', params: { email: 'user_student@example.com' }

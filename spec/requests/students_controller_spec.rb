@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::StudentsController do
+  let(:student) { build(:student) }
+
   describe 'PUT /students/:id/update_profil' do
-    let(:student) { build(:student) }
     before do
       student.save
       post '/api/v1/login', params:
@@ -43,7 +44,6 @@ RSpec.describe Api::V1::StudentsController do
   end
 
   describe 'PUT /students/:id/update_profil without a token' do
-    let(:student) { build(:student) }
     before do
       student.save
       put "/api/v1/students/#{student.id}/update_profil", params:
@@ -64,7 +64,6 @@ RSpec.describe Api::V1::StudentsController do
   end
 
   describe 'PUT /students/:id/update_profil with wrong id' do
-    let(:student) { build(:student) }
     before do
       student.save
       post '/api/v1/login', params:
@@ -97,7 +96,6 @@ RSpec.describe Api::V1::StudentsController do
   end
 
   describe 'PUT /students/:id/update_profil with wrong params' do
-    let(:student) { build(:student) }
     before do
       student.save
       post '/api/v1/login', params:

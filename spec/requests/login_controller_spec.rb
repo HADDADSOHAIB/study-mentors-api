@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::LoginController do
+  let(:student) { build(:student) }
   describe 'POST /api/v1/login' do
-    let(:student) { build(:student) }
     before do
       student.save
       post '/api/v1/login', params:
@@ -24,7 +24,6 @@ RSpec.describe Api::V1::LoginController do
   end
 
   describe 'POST /api/v1/login with invalid password' do
-    let(:student) { build(:student) }
     before do
       student.save
       post '/api/v1/login', params:
@@ -46,7 +45,6 @@ RSpec.describe Api::V1::LoginController do
   end
 
   describe 'POST /api/v1/login with invalid email' do
-    let(:student) { build(:student) }
     before do
       student.save
       post '/api/v1/login', params:
@@ -68,7 +66,6 @@ RSpec.describe Api::V1::LoginController do
   end
 
   describe 'GET /api/v1/login/get_user_by_token' do
-    let(:student) { build(:student) }
     before do
       student.save
       post '/api/v1/login', params:

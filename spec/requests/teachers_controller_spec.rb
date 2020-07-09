@@ -1,7 +1,8 @@
 require 'rails_helper'
 RSpec.describe Api::V1::TeachersController do
+  let(:teacher) { build(:teacher) }
+
   describe 'GET /api/v1/teachers/:id' do
-    let(:teacher) { build(:teacher) }
     before do
       teacher.save
       get "/api/v1/teachers/#{teacher.id}"
@@ -20,7 +21,6 @@ RSpec.describe Api::V1::TeachersController do
   end
 
   describe 'GET /api/v1/teachers/:id with wrong id' do
-    let(:teacher) { build(:teacher) }
     before do
       teacher.save
       get "/api/v1/teachers/#{teacher.id + 100}"
@@ -35,7 +35,6 @@ RSpec.describe Api::V1::TeachersController do
   end
 
   describe 'PUT /teachers/:id/update_profil' do
-    let(:teacher) { build(:teacher) }
     before do
       teacher.save
       post '/api/v1/login', params:
@@ -92,7 +91,6 @@ RSpec.describe Api::V1::TeachersController do
   end
 
   describe 'PUT /teachers/:id/update_profil without a token' do
-    let(:teacher) { build(:teacher) }
     before do
       teacher.save
       put "/api/v1/teachers/#{teacher.id}/update_profil", params:
@@ -113,7 +111,6 @@ RSpec.describe Api::V1::TeachersController do
   end
 
   describe 'PUT /teachers/:id/update_profil with wrong id' do
-    let(:teacher) { build(:teacher) }
     before do
       teacher.save
       post '/api/v1/login', params:
@@ -150,7 +147,6 @@ RSpec.describe Api::V1::TeachersController do
   end
 
   describe 'PUT /teachers/:id/update_profil with wrong params' do
-    let(:teacher) { build(:teacher) }
     before do
       teacher.save
       post '/api/v1/login', params:
@@ -187,7 +183,6 @@ RSpec.describe Api::V1::TeachersController do
   end
 
   describe 'PUT /teachers/:id/update_schedule' do
-    let(:teacher) { build(:teacher) }
     before do
       teacher.save
       post '/api/v1/login', params:
@@ -227,7 +222,6 @@ RSpec.describe Api::V1::TeachersController do
   end
 
   describe 'PUT /teachers/:id/update_schedule without a token' do
-    let(:teacher) { build(:teacher) }
     before do
       teacher.save
       put "/api/v1/teachers/#{teacher.id}/update_schedule", params:
@@ -248,7 +242,6 @@ RSpec.describe Api::V1::TeachersController do
   end
 
   describe 'PUT /teachers/:id/update_schedule with wrong id' do
-    let(:teacher) { build(:teacher) }
     before do
       teacher.save
       post '/api/v1/login', params:
@@ -281,7 +274,6 @@ RSpec.describe Api::V1::TeachersController do
   end
 
   describe 'PUT /teachers/:id/update_session_type' do
-    let(:teacher) { build(:teacher) }
     before do
       teacher.save
       post '/api/v1/login', params:
@@ -315,7 +307,6 @@ RSpec.describe Api::V1::TeachersController do
   end
 
   describe 'PUT /teachers/:id/update_session_type without a token' do
-    let(:teacher) { build(:teacher) }
     before do
       teacher.save
       put "/api/v1/teachers/#{teacher.id}/update_session_type", params:
@@ -333,7 +324,6 @@ RSpec.describe Api::V1::TeachersController do
   end
 
   describe 'PUT /teachers/:id/update_session_type with wrong id' do
-    let(:teacher) { build(:teacher) }
     before do
       teacher.save
       post '/api/v1/login', params:
