@@ -2,17 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::CategoriesController do
   let(:maths) { build(:category, name: 'maths') }
-  let(:physics) { build(:category, name: 'physics') }
-  let(:arts) { build(:category, name: 'arts') }
-  let(:teacher1) { build(:teacher) }
-  let(:teacher2) { build(:teacher,  email: 'user_teacher2@example.com') }
+  let(:teacher) { build(:teacher) }
   describe 'GET categories/:name/teachers' do
     before do
       maths.save
-      physics.save
-      arts.save
-      teacher1.save
-      teacher2.save
+      teacher.save
 
       post '/api/v1/login', params:
         {
@@ -23,7 +17,7 @@ RSpec.describe Api::V1::CategoriesController do
           }
         }
       json_response = JSON.parse(response.body)
-      put "/api/v1/teachers/#{teacher1.id}/update_profil", params:
+      put "/api/v1/teachers/#{teacher.id}/update_profil", params:
       {
         :teacher => {
           fullname: 'new name',
@@ -43,6 +37,4 @@ RSpec.describe Api::V1::CategoriesController do
       expect(json_response.keys).to match_array(%w[teachers])
     end
   end
-
-  
 end
