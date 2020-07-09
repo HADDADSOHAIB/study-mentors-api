@@ -12,26 +12,16 @@ RSpec.describe Api::V1::BookingsController do
       student.save
       post '/api/v1/login', params:
         {
-          :login => {
-            account_type: 'Student',
-            email: 'user_student@example.com',
-            password: 'password'
-          }
+          login: { account_type: 'Student', email: 'user_student@example.com', password: 'password' }
         }
       json_response = JSON.parse(response.body)
-      post "/api/v1/bookings", params:
+      post '/api/v1/bookings', params:
       {
-        :booking => {
-          teacher_id: teacher.id,
-          student_id: student.id,
-          category_id: maths.id,
-          type: 'online',
-          from: Date.new,
-          to: Date.new
-        },
+        booking: { teacher_id: teacher.id, student_id: student.id, category_id: maths.id,
+                   type: 'online', from: Date.new, to: Date.new }
       }, headers:
       {
-        Authorization:  "Bearer #{json_response["access"]}"
+        Authorization: "Bearer #{json_response['access']}"
       }
     end
     it 'returns http created' do
@@ -48,17 +38,9 @@ RSpec.describe Api::V1::BookingsController do
       maths.save
       teacher.save
       student.save
-      post "/api/v1/bookings", params:
-      {
-        :booking => {
-          teacher_id: teacher.id,
-          student_id: student.id,
-          category_id: maths.id,
-          type: 'online',
-          from: Date.new,
-          to: Date.new
-        },
-      }
+      post '/api/v1/bookings', params:
+      { booking: { teacher_id: teacher.id, student_id: student.id, category_id: maths.id,
+                   type: 'online', from: Date.new, to: Date.new } }
     end
     it 'returns http unthorized' do
       expect(response).to have_http_status(:unauthorized)
@@ -75,38 +57,23 @@ RSpec.describe Api::V1::BookingsController do
       teacher.save
       student.save
       post '/api/v1/login', params:
-        {
-          :login => {
-            account_type: 'Student',
-            email: 'user_student@example.com',
-            password: 'password'
-          }
-        }
+        { login: { account_type: 'Student', email: 'user_student@example.com',
+                   password: 'password' } }
       json_response = JSON.parse(response.body)
-      token = json_response["access"]
-      post "/api/v1/bookings", params:
+      token = json_response['access']
+      post '/api/v1/bookings', params:
+      { booking: { teacher_id: teacher.id, student_id: student.id, category_id: maths.id,
+                   type: 'online', from: Date.new, to: Date.new } },
+                               headers: { Authorization: "Bearer #{token}" }
+      post '/api/v1/bookings/my_bookings', params:
       {
-        :booking => {
-          teacher_id: teacher.id,
-          student_id: student.id,
-          category_id: maths.id,
-          type: 'online',
-          from: Date.new,
-          to: Date.new
-        },
-      }, headers:
-      {
-        Authorization:  "Bearer #{token}"
-      }
-      post "/api/v1/bookings/my_bookings", params:
-      {
-        :booking => {
+        booking: {
           id: teacher.id,
           account_type: 'Teacher'
-        },
+        }
       }, headers:
       {
-        Authorization:  "Bearer #{token}"
+        Authorization: "Bearer #{token}"
       }
     end
     it 'returns http ok' do
@@ -132,36 +99,16 @@ RSpec.describe Api::V1::BookingsController do
       teacher.save
       student.save
       post '/api/v1/login', params:
-        {
-          :login => {
-            account_type: 'Student',
-            email: 'user_student@example.com',
-            password: 'password'
-          }
-        }
+        { login: { account_type: 'Student', email: 'user_student@example.com',
+                   password: 'password' } }
       json_response = JSON.parse(response.body)
-      token = json_response["access"]
-      post "/api/v1/bookings", params:
-      {
-        :booking => {
-          teacher_id: teacher.id,
-          student_id: student.id,
-          category_id: maths.id,
-          type: 'online',
-          from: Date.new,
-          to: Date.new
-        },
-      }, headers:
-      {
-        Authorization:  "Bearer #{token}"
-      }
-      post "/api/v1/bookings/my_bookings", params:
-      {
-        :booking => {
-          id: teacher.id,
-          account_type: 'Teacher'
-        },
-      }
+      token = json_response['access']
+      post '/api/v1/bookings', params:
+      { booking: { teacher_id: teacher.id, student_id: student.id, category_id: maths.id,
+                   type: 'online', from: Date.new, to: Date.new } },
+                               headers: { Authorization: "Bearer #{token}" }
+      post '/api/v1/bookings/my_bookings', params:
+      { booking: { id: teacher.id, account_type: 'Teacher' } }
     end
     it 'returns http unthorized' do
       expect(response).to have_http_status(:unauthorized)

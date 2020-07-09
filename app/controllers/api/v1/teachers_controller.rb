@@ -31,7 +31,7 @@ module Api
         if @teacher.update(schedule: params[:schedule])
           render json: @teacher, status: :ok
         else
-          render json: {error: @teacher.errors}, status: 400
+          render json: { error: @teacher.errors }, status: 400
         end
       end
 
@@ -39,7 +39,7 @@ module Api
         if @teacher.update(session_type: params[:session_type])
           render json: @teacher, status: :ok
         else
-          render json: {error: @teacher.errors}, status: 400
+          render json: { error: @teacher.errors }, status: 400
         end
       end
 

@@ -10,7 +10,7 @@ RSpec.describe Api::V1::CategoriesController do
 
       post '/api/v1/login', params:
         {
-          :login => {
+          login: {
             account_type: 'Teacher',
             email: 'user_teacher@example.com',
             password: 'password'
@@ -19,13 +19,13 @@ RSpec.describe Api::V1::CategoriesController do
       json_response = JSON.parse(response.body)
       put "/api/v1/teachers/#{teacher.id}/update_profil", params:
       {
-        :teacher => {
-          fullname: 'new name',
+        teacher: {
+          fullname: 'new name'
         },
-        :categories => ['maths', 'physics'],
+        categories: %w[maths physics]
       }, headers:
       {
-        Authorization:  "Bearer #{json_response["access"]}"
+        Authorization: "Bearer #{json_response['access']}"
       }
       get '/api/v1/categories/maths/teachers'
     end

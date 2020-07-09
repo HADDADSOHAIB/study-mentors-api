@@ -8,7 +8,7 @@ RSpec.describe Api::V1::StudentsController do
       student.save
       post '/api/v1/login', params:
         {
-          :login => {
+          login: {
             account_type: 'Student',
             email: 'user_student@example.com',
             password: 'password'
@@ -17,13 +17,13 @@ RSpec.describe Api::V1::StudentsController do
       json_response = JSON.parse(response.body)
       put "/api/v1/students/#{student.id}/update_profil", params:
       {
-        :student => {
+        student: {
           fullname: 'new name',
           phone: 'new phone'
         }
       }, headers:
       {
-        Authorization:  "Bearer #{json_response["access"]}"
+        Authorization: "Bearer #{json_response['access']}"
       }
     end
     it 'returns http ok' do
@@ -35,11 +35,11 @@ RSpec.describe Api::V1::StudentsController do
     end
     it 'the student has the new name' do
       json_response = JSON.parse(response.body)
-      expect(json_response["current_user"]["fullname"]).to eq('new name')
+      expect(json_response['current_user']['fullname']).to eq('new name')
     end
     it 'the student has the new phone' do
       json_response = JSON.parse(response.body)
-      expect(json_response["current_user"]["phone"]).to eq('new phone')
+      expect(json_response['current_user']['phone']).to eq('new phone')
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.describe Api::V1::StudentsController do
       student.save
       put "/api/v1/students/#{student.id}/update_profil", params:
       {
-        :student => {
+        student: {
           fullname: 'new name',
           phone: 'new phone'
         }
@@ -68,7 +68,7 @@ RSpec.describe Api::V1::StudentsController do
       student.save
       post '/api/v1/login', params:
         {
-          :login => {
+          login: {
             account_type: 'Student',
             email: 'user_student@example.com',
             password: 'password'
@@ -77,13 +77,13 @@ RSpec.describe Api::V1::StudentsController do
       json_response = JSON.parse(response.body)
       put "/api/v1/students/#{student.id + 100}/update_profil", params:
       {
-        :student => {
+        student: {
           fullname: 'new name',
           phone: 'new phone'
         }
       }, headers:
       {
-        Authorization:  "Bearer #{json_response["access"]}"
+        Authorization: "Bearer #{json_response['access']}"
       }
     end
     it 'returns http 400' do
@@ -100,7 +100,7 @@ RSpec.describe Api::V1::StudentsController do
       student.save
       post '/api/v1/login', params:
         {
-          :login => {
+          login: {
             account_type: 'Student',
             email: 'user_student@example.com',
             password: 'password'
@@ -109,13 +109,13 @@ RSpec.describe Api::V1::StudentsController do
       json_response = JSON.parse(response.body)
       put "/api/v1/students/#{student.id + 100}/update_profil", params:
       {
-        :student => {
+        student: {
           fullname: '',
           phone: 'new phone'
         }
       }, headers:
       {
-        Authorization:  "Bearer #{json_response["access"]}"
+        Authorization: "Bearer #{json_response['access']}"
       }
     end
     it 'returns http 400' do

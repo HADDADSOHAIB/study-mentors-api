@@ -15,7 +15,7 @@ module Api
           @categories = @user.categories
         end
 
-        if @user && @user.authenticate(login_params[:password])
+        if @user&.authenticate(login_params[:password])
           payload = { user_id: @user.id, account_type: account_type }
           session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)
           tokens = session.login

@@ -16,7 +16,7 @@ RSpec.describe Api::V1::TeachersController do
     end
     it 'The teacher has the same id' do
       json_response = JSON.parse(response.body)
-      expect(json_response["teacher"]["id"]).to eq(teacher.id)
+      expect(json_response['teacher']['id']).to eq(teacher.id)
     end
   end
 
@@ -39,7 +39,7 @@ RSpec.describe Api::V1::TeachersController do
       teacher.save
       post '/api/v1/login', params:
         {
-          :login => {
+          login: {
             account_type: 'Teacher',
             email: 'user_teacher@example.com',
             password: 'password'
@@ -48,17 +48,17 @@ RSpec.describe Api::V1::TeachersController do
       json_response = JSON.parse(response.body)
       put "/api/v1/teachers/#{teacher.id}/update_profil", params:
       {
-        :teacher => {
+        teacher: {
           fullname: 'new name',
           phone: 'new phone',
           bio: 'new bio',
           what_I_can_do: 'new what I can do',
           photo: 'new photo'
         },
-        :categories => [],
+        categories: []
       }, headers:
       {
-        Authorization:  "Bearer #{json_response["access"]}"
+        Authorization: "Bearer #{json_response['access']}"
       }
     end
     it 'returns http ok' do
@@ -70,23 +70,23 @@ RSpec.describe Api::V1::TeachersController do
     end
     it 'the student has the new name' do
       json_response = JSON.parse(response.body)
-      expect(json_response["current_user"]["fullname"]).to eq('new name')
+      expect(json_response['current_user']['fullname']).to eq('new name')
     end
     it 'the student has the new phone' do
       json_response = JSON.parse(response.body)
-      expect(json_response["current_user"]["phone"]).to eq('new phone')
+      expect(json_response['current_user']['phone']).to eq('new phone')
     end
     it 'the student has the new bio' do
       json_response = JSON.parse(response.body)
-      expect(json_response["current_user"]["bio"]).to eq('new bio')
+      expect(json_response['current_user']['bio']).to eq('new bio')
     end
     it 'the student has the new what_I_can_do' do
       json_response = JSON.parse(response.body)
-      expect(json_response["current_user"]["what_I_can_do"]).to eq('new what I can do')
+      expect(json_response['current_user']['what_I_can_do']).to eq('new what I can do')
     end
     it 'the student has the new photo' do
       json_response = JSON.parse(response.body)
-      expect(json_response["current_user"]["photo"]).to eq('new photo')
+      expect(json_response['current_user']['photo']).to eq('new photo')
     end
   end
 
@@ -95,7 +95,7 @@ RSpec.describe Api::V1::TeachersController do
       teacher.save
       put "/api/v1/teachers/#{teacher.id}/update_profil", params:
       {
-        :teacher => {
+        teacher: {
           fullname: 'new name',
           phone: 'new phone'
         }
@@ -115,7 +115,7 @@ RSpec.describe Api::V1::TeachersController do
       teacher.save
       post '/api/v1/login', params:
         {
-          :login => {
+          login: {
             account_type: 'Teacher',
             email: 'user_teacher@example.com',
             password: 'password'
@@ -124,17 +124,17 @@ RSpec.describe Api::V1::TeachersController do
       json_response = JSON.parse(response.body)
       put "/api/v1/teachers/#{teacher.id + 100}/update_profil", params:
       {
-        :teacher => {
+        teacher: {
           fullname: 'new name',
           phone: 'new phone',
           bio: 'new bio',
           what_I_can_do: 'new what I can do',
           photo: 'new photo'
         },
-        :categories => [],
+        categories: []
       }, headers:
       {
-        Authorization:  "Bearer #{json_response["access"]}"
+        Authorization: "Bearer #{json_response['access']}"
       }
     end
     it 'returns http 400' do
@@ -151,7 +151,7 @@ RSpec.describe Api::V1::TeachersController do
       teacher.save
       post '/api/v1/login', params:
         {
-          :login => {
+          login: {
             account_type: 'Teacher',
             email: 'user_teacher@example.com',
             password: 'password'
@@ -160,17 +160,17 @@ RSpec.describe Api::V1::TeachersController do
       json_response = JSON.parse(response.body)
       put "/api/v1/teachers/#{teacher.id}/update_profil", params:
       {
-        :teacher => {
+        teacher: {
           fullname: '',
           phone: 'new phone',
           bio: 'new bio',
           what_I_can_do: 'new what I can do',
           photo: 'new photo'
         },
-        :categories => [],
+        categories: []
       }, headers:
       {
-        Authorization:  "Bearer #{json_response["access"]}"
+        Authorization: "Bearer #{json_response['access']}"
       }
     end
     it 'returns http 400' do
@@ -187,7 +187,7 @@ RSpec.describe Api::V1::TeachersController do
       teacher.save
       post '/api/v1/login', params:
         {
-          :login => {
+          login: {
             account_type: 'Teacher',
             email: 'user_teacher@example.com',
             password: 'password'
@@ -196,13 +196,13 @@ RSpec.describe Api::V1::TeachersController do
       json_response = JSON.parse(response.body)
       put "/api/v1/teachers/#{teacher.id}/update_schedule", params:
       {
-        :schedule => {
+        schedule: {
           monday: 'monady',
           friday: 'friday'
-        },
+        }
       }, headers:
       {
-        Authorization:  "Bearer #{json_response["access"]}"
+        Authorization: "Bearer #{json_response['access']}"
       }
     end
     it 'returns http ok' do
@@ -214,10 +214,10 @@ RSpec.describe Api::V1::TeachersController do
     end
     it 'the student has the new schedule' do
       json_response = JSON.parse(response.body)
-      expect(json_response["schedule"]).to eq({
-        "monday" => 'monady',
-        "friday" => 'friday'
-      })
+      expect(json_response['schedule']).to eq({
+                                                'monday' => 'monady',
+                                                'friday' => 'friday'
+                                              })
     end
   end
 
@@ -226,10 +226,10 @@ RSpec.describe Api::V1::TeachersController do
       teacher.save
       put "/api/v1/teachers/#{teacher.id}/update_schedule", params:
       {
-        :schedule => {
+        schedule: {
           monday: 'monady',
           friday: 'friday'
-        },
+        }
       }
     end
     it 'returns http unauthorized' do
@@ -246,7 +246,7 @@ RSpec.describe Api::V1::TeachersController do
       teacher.save
       post '/api/v1/login', params:
         {
-          :login => {
+          login: {
             account_type: 'Teacher',
             email: 'user_teacher@example.com',
             password: 'password'
@@ -255,13 +255,13 @@ RSpec.describe Api::V1::TeachersController do
       json_response = JSON.parse(response.body)
       put "/api/v1/teachers/#{teacher.id + 100}/update_schedule", params:
       {
-        :schedule => {
+        schedule: {
           monday: 'monady',
           friday: 'friday'
-        },
+        }
       }, headers:
       {
-        Authorization:  "Bearer #{json_response["access"]}"
+        Authorization: "Bearer #{json_response['access']}"
       }
     end
     it 'returns http 400' do
@@ -278,7 +278,7 @@ RSpec.describe Api::V1::TeachersController do
       teacher.save
       post '/api/v1/login', params:
         {
-          :login => {
+          login: {
             account_type: 'Teacher',
             email: 'user_teacher@example.com',
             password: 'password'
@@ -287,10 +287,10 @@ RSpec.describe Api::V1::TeachersController do
       json_response = JSON.parse(response.body)
       put "/api/v1/teachers/#{teacher.id}/update_session_type", params:
       {
-        :session_type => "online, shop"
+        session_type: 'online, shop'
       }, headers:
       {
-        Authorization:  "Bearer #{json_response["access"]}"
+        Authorization: "Bearer #{json_response['access']}"
       }
     end
     it 'returns http ok' do
@@ -302,7 +302,7 @@ RSpec.describe Api::V1::TeachersController do
     end
     it 'the student has the new session_type' do
       json_response = JSON.parse(response.body)
-      expect(json_response["session_type"]).to eq("online, shop")
+      expect(json_response['session_type']).to eq('online, shop')
     end
   end
 
@@ -311,7 +311,7 @@ RSpec.describe Api::V1::TeachersController do
       teacher.save
       put "/api/v1/teachers/#{teacher.id}/update_session_type", params:
       {
-        :session_type => "online, shop"
+        session_type: 'online, shop'
       }
     end
     it 'returns http unauthorized' do
@@ -328,7 +328,7 @@ RSpec.describe Api::V1::TeachersController do
       teacher.save
       post '/api/v1/login', params:
         {
-          :login => {
+          login: {
             account_type: 'Teacher',
             email: 'user_teacher@example.com',
             password: 'password'
@@ -337,10 +337,10 @@ RSpec.describe Api::V1::TeachersController do
       json_response = JSON.parse(response.body)
       put "/api/v1/teachers/#{teacher.id + 100}/update_session_type", params:
       {
-        :session_type => "online, shop"
+        session_type: 'online, shop'
       }, headers:
       {
-        Authorization:  "Bearer #{json_response["access"]}"
+        Authorization: "Bearer #{json_response['access']}"
       }
     end
     it 'returns http 400' do
